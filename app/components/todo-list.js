@@ -11,9 +11,16 @@ export default Ember.Component.extend({
 		var model = this.get('model');
 		return model.filterBy('isCompleted', false).get('length');
 	}).property('model.@each.isCompleted'),
-	
-	inflection: Ember.computed('remaining', function(){
+	// remaining: Ember.computed('model.@each.isCompleted', function(){
+	// 	var model = this.get('model');
+	// 	return model.filterBy('isCompleted', false).get('length');
+	// }),
+	// inflection: Ember.computed('remaining', function(){
+	// 	var remaining = this.get('remaining');
+	// 	return (remaining === 1) ? 'item' : 'items';
+	// })
+	inflection: (function(){
 		var remaining = this.get('remaining');
 		return (remaining === 1) ? 'item' : 'items';
-	})
+	}).property('remaining')
 });
