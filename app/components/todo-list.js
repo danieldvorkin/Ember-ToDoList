@@ -29,5 +29,17 @@ export default Ember.Component.extend({
 	completed: (function() {
 		var model = this.get('model');
 		return model.filterBy('isCompleted', true).get('length');
-	}).property('model.@each.isCompleted')
+	}).property('model.@each.isCompleted'),
+
+	allAreDone: (function(key, value){
+		var model = this.get('model');
+		console.log(key + ': ' + value);
+		if(value === undefined){
+			return model.get('length') > 0 && model.isEvery('isCompleted', true);
+		} else {
+			model.setEach('isCompleted', value);
+			model.invoke('save');
+			return value;
+		}
+	}).property('@each.isCompleted')
 });
